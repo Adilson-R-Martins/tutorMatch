@@ -12,18 +12,23 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -139,6 +144,38 @@ private fun CardContent(name: String) {
                 }
             )
         }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SearchBar(
+    modifier: Modifier = Modifier
+) {
+    TextField(
+        value = "",
+        onValueChange = {},
+        leadingIcon = {
+            Icon(
+                Icons.Default.Search,
+                contentDescription = null
+            )
+        },
+        placeholder = {
+            Text(stringResource(id = androidx.compose.material3.R.string.search_bar_search))
+        },
+        modifier = modifier
+            .heightIn(min = 56.dp)
+            .fillMaxWidth()
+    )
+}
+
+@Preview(showBackground = true, widthDp = 320, uiMode = UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, widthDp = 320)
+@Composable()
+fun SearchBarPreview() {
+    TutorMatchTheme {
+        SearchBar(Modifier.padding(8.dp))
     }
 }
 

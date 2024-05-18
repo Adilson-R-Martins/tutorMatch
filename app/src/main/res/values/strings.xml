@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Tutor Match</string>
+    <string name="show_less" />
+    <string name="show_more" />
+</resources>

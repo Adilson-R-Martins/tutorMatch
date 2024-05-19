@@ -5,12 +5,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +22,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -83,10 +87,9 @@ private fun HelloScreen(onContinueClicked: () -> Unit) {
         ) {
             Text(text = "Welcome to TutorMatch!")
             Button(
-                onClick = onContinueClicked,
-                modifier = Modifier.padding(vertical = 24.dp)
+                onClick = onContinueClicked, modifier = Modifier.padding(vertical = 24.dp)
             ) {
-                Text(text = "Continue")
+                Text(stringResource(id = R.string.enterApp))
 
             }
         }
@@ -118,8 +121,7 @@ private fun CardContent(name: String) {
             .padding(12.dp)
             .animateContentSize(
                 animationSpec = spring(
-                    dampingRatio = Spring.DampingRatioLowBouncy,
-                    stiffness = Spring.StiffnessLow
+                    dampingRatio = Spring.DampingRatioLowBouncy, stiffness = Spring.StiffnessLow
                 )
             )
     ) {
@@ -136,8 +138,9 @@ private fun CardContent(name: String) {
             )
             if (expanded) {
                 Text(
-                    text = ("Composem ipsum color sit lazy, " +
-                            "padding theme elit, sed do bouncy. ").repeat(4),
+                    text = ("Composem ipsum color sit lazy, " + "padding theme elit, sed do bouncy. ").repeat(
+                        4
+                    ),
                 )
             }
         }
@@ -159,34 +162,27 @@ private fun CardContent(name: String) {
 fun SearchBar(
     modifier: Modifier = Modifier
 ) {
-    TextField(
-        value = "",
-        onValueChange = {},
-        leadingIcon = {
-            Icon(
-                Icons.Default.Search,
-                contentDescription = null
-            )
-        },
-        placeholder = {
-            Text(stringResource(id = androidx.compose.material3.R.string.search_bar_search))
-        },
-        modifier = modifier
-            .heightIn(min = 56.dp)
-            .fillMaxWidth()
+    TextField(value = "", onValueChange = {}, leadingIcon = {
+        Icon(
+            Icons.Default.Search, contentDescription = null
+        )
+    }, placeholder = {
+        Text(stringResource(id = androidx.compose.material3.R.string.search_bar_search))
+    }, modifier = modifier
+        .heightIn(min = 56.dp)
+        .fillMaxWidth()
     )
 }
 
 @Composable
 fun AttributeElement(
-    modifier: Modifier = Modifier
+    @DrawableRes drawable: Int, @StringRes text: Int, modifier: Modifier = Modifier
 ) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
+        modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painterResource(id = R.drawable.qualifications),
+            painter = painterResource(drawable),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -194,20 +190,45 @@ fun AttributeElement(
                 .clip(CircleShape)
         )
         Text(
-            text = "Qualifications",
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.paddingFromBaseline(top = 24.dp, bottom = 8.dp)
+            text = stringResource(text),
+            modifier = Modifier.paddingFromBaseline(top = 24.dp, bottom = 8.dp),
+            style = MaterialTheme.typography.bodyMedium,
         )
     }
-
 }
 
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-@Preview(showBackground = true)
-@Composable()
+@Composable
+fun AttributeRow(
+    modifier: Modifier = Modifier
+) {
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        modifier = modifier
+    ) {
+        items(userAttributeData) { item ->
+            AttributeElement(
+                item.first, item.second
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+fun AttributeRowPreview() {
+    TutorMatchTheme { AttributeRow() }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
 fun AttributeElementPreview() {
     TutorMatchTheme {
-        AttributeElement()
+        AttributeElement(
+            text = R.string.attribute_8,
+            drawable = R.drawable.certificates,
+            modifier = Modifier.padding(8.dp)
+        )
     }
 }
 
@@ -237,3 +258,14 @@ fun MyAppPreview() {
         MyApp()
     }
 }
+
+private val userAttributeData = listOf(
+    R.drawable.interests to R.string.attribute_1,
+    R.drawable.objectives to R.string.attribute_2,
+    R.drawable.qualifications to R.string.attribute_3,
+    R.drawable.resources to R.string.attribute_4,
+    R.drawable.reviews to R.string.attribute_5,
+    R.drawable.skills to R.string.attribute_6,
+    R.drawable.workexperience to R.string.attribute_7,
+    R.drawable.certificates to R.string.attribute_8
+).map { Pair(it.first, it.second) }

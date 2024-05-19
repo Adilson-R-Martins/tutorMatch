@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">Tutor Match</string>
-    <string name="show_less" />
-    <string name="show_more" />
+    <string name="show_less">Show less</string>
+    <string name="show_more">Show more</string>
+    <string name="attribute_1">Interests</string>
+    <string name="attribute_2">Objectives</string>
+    <string name="attribute_3">Qualifications</string>
+    <string name="attribute_4">Resources</string>
+    <string name="attribute_5">Reviews</string>
+    <string name="attribute_6">Skills</string>
+    <string name="attribute_7">Work Experience</string>
+    <string name="attribute_8">Certificates</string>
+    <string name="enterApp">Continue</string>
 </resources>

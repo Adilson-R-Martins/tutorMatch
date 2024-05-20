@@ -1,5 +1,15 @@
 <resources>
     <string name="app_name">Tutor Match</string>
+    <string name="icon">Logo TutorMatch</string>
+    <string name="nome">Qual o seu nome?</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="inserirDados">Inserir dados</string>
+    <string name="entrar">Entrar</string>
+    <string name="voltarMenu">Voltar para o menu</string>
+    <string name="perfil">Meu Perfil</string>
+    <string name="inserirNome">Por favor, insira seu nome.</string>
     <string name="show_less" />
     <string name="show_more" />
+    <string name="back">skills</string>
 </resources>
